@@ -13,10 +13,10 @@ CREATE TABLE Dimensao_Tempo (
     Ano INT
 );
 
--- Define a tabela Dimensão Comodidade
-CREATE TABLE Dimensao_Comodidade (
-    ID_Comodidade INT PRIMARY KEY,
-    Tipo_Comodidade VARCHAR(20)
+-- Define a tabela Dimensão Comorbidade
+CREATE TABLE Dimensao_Comorbidade (
+    ID_Comorbidade INT PRIMARY KEY,
+    Tipo_Comorbidade VARCHAR(20)
 );
 
 -- Define a tabela Dimensão Localidade
@@ -46,13 +46,13 @@ CREATE TABLE Dimensao_Genero (
 CREATE TABLE Fato_Mortes_Covid19 (
     ID_Morte INT PRIMARY KEY,
     ID_Tempo INT,
-    ID_Comodidade INT,
+    ID_Comorbidade INT,
     ID_Localidade INT,
     ID_FaixaEtaria INT,
     ID_Genero INT,
     Numero_Mortes INT,
     CONSTRAINT FK_Tempo FOREIGN KEY (ID_Tempo) REFERENCES Dimensao_Tempo(ID_Tempo),
-    CONSTRAINT FK_Comodidade FOREIGN KEY (ID_Comodidade) REFERENCES Dimensao_Comodidade(ID_Comodidade),
+    CONSTRAINT FK_Comorbidade FOREIGN KEY (ID_Comorbidade) REFERENCES Dimensao_Comorbidade(ID_Comorbidade),
     CONSTRAINT FK_Localidade FOREIGN KEY (ID_Localidade) REFERENCES Dimensao_Localidade(ID_Localidade),
     CONSTRAINT FK_FaixaEtaria FOREIGN KEY (ID_FaixaEtaria) REFERENCES Dimensao_Faixa_Etaria(ID_FaixaEtaria),
     CONSTRAINT FK_Genero FOREIGN KEY (ID_Genero) REFERENCES Dimensao_Genero(ID_Genero)
@@ -88,7 +88,7 @@ ALTER TABLE Fato_Mortes_Covid19
     ADD CONSTRAINT CK_Numero_Mortes CHECK (Numero_Mortes >= 0);
 
 ALTER TABLE Fato_Mortes_Covid19
-    ADD CONSTRAINT FK_Morte_Tempo_Comodidade UNIQUE (ID_Morte, ID_Tempo, ID_Comodidade);
+    ADD CONSTRAINT FK_Morte_Tempo_Comorbidade UNIQUE (ID_Morte, ID_Tempo, ID_Comorbidade);
 
 ALTER TABLE Fato_Mortes_Covid19
     ADD CONSTRAINT FK_Morte_Localidade_FaixaEtaria_Genero UNIQUE (ID_Morte, ID_Localidade, ID_FaixaEtaria, ID_Genero);
